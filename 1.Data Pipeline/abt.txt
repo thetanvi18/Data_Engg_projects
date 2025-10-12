@@ -1,0 +1,25 @@
+# # Real-Time Data Pipeline using Kafka, Faust & Snowflake
+
+A lightweight **real-time data streaming pipeline** built with **Python**, **Kafka**, **Faust**, and **Snowflake**.  
+It streams messages from a Kafka topic, processes them asynchronously with Faust, and inserts records into a Snowflake table.
+
+## 🚀 Architecture
+Kafka Producer → Kafka Broker → Faust Stream Processor → Snowflake Cloud Warehouse
+
+## ⚙️ Tech Stack
+- **Python 3.10+**
+- **Apache Kafka** (Docker)
+- **Faust** (stream processing)
+- **Snowflake** (cloud data warehouse)
+
+## 🔧 Setup Steps
+1. Start Kafka using Docker Compose.  
+2. Create `STREAMING_DB.DEMO_SCHEMA.KAFKA_DATA` table in Snowflake.  
+3. Set Snowflake credentials as environment variables in VS Code terminal.  
+4. Run `python producer.py` to send messages.  
+5. Run the Faust worker:  
+   ```bash
+   faust -A faust_app worker -l info
+   
+#Kafka Producer → Kafka Broker → Faust Stream Processor → Snowflake Cloud Warehouse
+
