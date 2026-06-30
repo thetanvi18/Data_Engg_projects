@@ -39,7 +39,6 @@ AWS_LAKEHOUSE/
 │
 ├── api_test/
 ├── data/
-│   └── sample/
 ├── glue_jobs/
 ├── lambda/
 │   └── ingestion/
