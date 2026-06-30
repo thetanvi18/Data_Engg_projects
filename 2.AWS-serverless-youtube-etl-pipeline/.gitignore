@@ -1,0 +1,46 @@
+# ==========================
+# Python
+# ==========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual Environments
+venv/
+.venv/
+env/
+
+# Environment Variables
+.env
+
+# VS Code
+.vscode/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Python Packaging
+build/
+dist/
+*.egg-info/
+
+# Logs
+*.log
+
+# AWS Lambda ZIP packages
+*.zip
+
+# AWS Credentials
+.aws/
+
+# Generated Parquet & Data Files
+*.parquet
+*.csv
+
+# PySpark Temporary Files
+spark-warehouse/
