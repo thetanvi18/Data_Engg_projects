@@ -40,7 +40,6 @@ dist/
 
 # Generated Parquet & Data Files
 *.parquet
-*.csv
 
 # PySpark Temporary Files
 spark-warehouse/
