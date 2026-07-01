@@ -1,0 +1,64 @@
+name: 'retail_dw'
+version: '1.0.0'
+config-version: 2
+
+profile: 'retail_dw'
+
+# ── Model paths ───────────────────────────────────────────────────────────────
+model-paths:   ["models"]
+snapshot-paths: ["snapshots"]
+test-paths:    ["tests"]
+macro-paths:   ["macros"]
+seed-paths:    ["seeds"]
+analysis-paths: ["analyses"]
+target-path:   "target"
+clean-targets: ["target", "dbt_packages"]
+
+# ── Model configs ─────────────────────────────────────────────────────────────
+models:
+  retail_dw:
+
+    bronze:
+      +schema:        bronze
+      +materialized:  view
+      +tags:          ["bronze", "raw"]
+
+    silver:
+      +schema:        silver
+      +materialized:  table
+      +tags:          ["silver", "cleaned"]
+
+    gold:
+      +schema:        gold
+      +materialized:  table
+      +tags:          ["gold", "star_schema"]
+
+      # Fact tables: incremental (append new records only)
+      fact_orders:
+        +materialized:   incremental
+        +unique_key:     order_id
+        +on_schema_change: append_new_columns
+
+      fact_payments:
+        +materialized:   incremental
+        +unique_key:     payment_id
+        +on_schema_change: append_new_columns
+
+# ── Snapshot configs ──────────────────────────────────────────────────────────
+snapshots:
+  retail_dw:
+    +target_schema: gold
+    +tags:          ["scd2", "snapshot"]
+
+# ── Seed configs ──────────────────────────────────────────────────────────────
+seeds:
+  retail_dw:
+    +schema: bronze
+    +tags:   ["seed", "reference"]
+
+# ── Test configs ──────────────────────────────────────────────────────────────
+tests:
+  retail_dw:
+    +severity: error
+    +store_failures: true
+    +schema: dbt_test_failures

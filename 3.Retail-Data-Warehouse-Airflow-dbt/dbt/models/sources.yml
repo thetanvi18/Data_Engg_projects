@@ -1,0 +1,69 @@
+version: 2
+
+sources:
+  - name: bronze
+    description: "Raw data loaded by Airflow into the bronze PostgreSQL schema."
+    schema: bronze
+    tags: ["bronze", "source"]
+
+    tables:
+      - name: raw_customers
+        description: "Raw customer records from the retail ERP — may contain nulls, bad phone formats, mixed-case cities."
+        columns:
+          - name: customer_id
+            description: "UUID primary key"
+            tests: [not_null]
+          - name: email
+            description: "Customer email — nullable (~5% nulls injected)"
+          - name: registration_date
+            description: "Customer sign-up date (NULL in Olist data)"
+
+      - name: raw_products
+        description: "Raw product catalog — may have zero unit_price records."
+        columns:
+          - name: product_id
+            description: "UUID primary key"
+            tests: [not_null]
+          - name: unit_price
+            description: "Selling price — some zeros injected"
+            tests: [not_null]
+
+      - name: raw_orders
+        description: "Raw order records — may contain duplicates and future-dated orders."
+        columns:
+          - name: order_id
+            description: "UUID — not guaranteed unique (duplicates injected)"
+            tests: [not_null]
+          - name: customer_id
+            description: "FK to raw_customers"
+            tests: [not_null]
+
+      - name: raw_order_items
+        description: "Raw line items — may have negative quantities (returns) and orphan records."
+        columns:
+          - name: order_item_id
+            description: "UUID primary key"
+            tests: [not_null]
+          - name: order_id
+            description: "FK to raw_orders — some orphans injected"
+            tests: [not_null]
+
+      - name: raw_payments
+        description: "Raw payment records — may have zero-amount entries."
+        columns:
+          - name: payment_id
+            description: "UUID primary key"
+            tests: [not_null]
+          - name: order_id
+            description: "FK to raw_orders"
+            tests: [not_null]
+
+      - name: raw_inventory
+        description: "Raw inventory records — may have negative qty_on_hand."
+        columns:
+          - name: inventory_id
+            description: "UUID primary key"
+            tests: [not_null]
+          - name: product_id
+            description: "FK to raw_products"
+            tests: [not_null]

@@ -1,0 +1,83 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: >
+      Cleaned customer records. Nulls imputed, phones normalized to 10-digit,
+      city names standardized to INITCAP, duplicates removed.
+    columns:
+      - name: customer_id
+        description: "UUID primary key"
+        tests: [not_null, unique]
+      - name: email
+        description: "Email — never null after imputation"
+        tests: [not_null]
+      - name: customer_segment
+        description: "Customer tier"
+        tests:
+          - accepted_values:
+              values: ['Premium', 'Regular', 'Budget', 'VIP']
+
+  - name: stg_products
+    description: >
+      Cleaned product catalog. Zero-price products flagged. Gross margin added.
+    columns:
+      - name: product_id
+        tests: [not_null, unique]
+      - name: unit_price
+        tests: [not_null]
+      - name: category
+        tests: [not_null]
+
+  - name: stg_orders
+    description: >
+      Cleaned orders. Duplicates removed, future-dated orders flagged,
+      invalid statuses flagged.
+    columns:
+      - name: order_id
+        tests: [not_null, unique]
+      - name: customer_id
+        tests: [not_null]
+      - name: order_status
+        tests:
+          - accepted_values:
+              values: ['Pending','Processing','Shipped','Delivered','Cancelled','Returned']
+              config:
+                where: "is_invalid_status = false"
+
+  - name: stg_order_items
+    description: >
+      Cleaned order_items. Returns flagged, orphan rows removed,
+      totals recalculated.
+    columns:
+      - name: order_item_id
+        tests: [not_null, unique]
+      - name: order_id
+        tests: [not_null]
+      - name: quantity
+        tests: [not_null]
+
+  - name: stg_payments
+    description: >
+      Cleaned payments. Zero-amount flagged, unknown methods flagged.
+    columns:
+      - name: payment_id
+        tests: [not_null, unique]
+      - name: order_id
+        tests: [not_null]
+      - name: amount
+        tests: [not_null]
+
+  - name: stg_inventory
+    description: >
+      Cleaned inventory. Negative quantities clamped to 0, oversold flag added,
+      stock_status derived.
+    columns:
+      - name: inventory_id
+        tests: [not_null, unique]
+      - name: product_id
+        tests: [not_null, unique]
+      - name: stock_status
+        tests:
+          - accepted_values:
+              values: ['In Stock', 'Low Stock', 'Out of Stock']

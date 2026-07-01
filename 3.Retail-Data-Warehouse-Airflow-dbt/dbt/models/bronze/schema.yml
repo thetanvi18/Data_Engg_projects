@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: bronze_customers
+    description: "Bronze view — raw_customers with ingestion metadata. No cleaning."
+    columns:
+      - name: customer_id
+        tests: [not_null]
+
+  - name: bronze_products
+    description: "Bronze view — raw_products with ingestion metadata."
+    columns:
+      - name: product_id
+        tests: [not_null]
+
+  - name: bronze_orders
+    description: "Bronze view — raw_orders including duplicates and bad dates."
+    columns:
+      - name: order_id
+        tests: [not_null]
+
+  - name: bronze_order_items
+    description: "Bronze view — raw_order_items including negatives and orphans."
+    columns:
+      - name: order_item_id
+        tests: [not_null]
+
+  - name: bronze_payments
+    description: "Bronze view — raw_payments including zero-amount records."
+    columns:
+      - name: payment_id
+        tests: [not_null]
+
+  - name: bronze_inventory
+    description: "Bronze view — raw_inventory including negative quantities."
+    columns:
+      - name: inventory_id
+        tests: [not_null]

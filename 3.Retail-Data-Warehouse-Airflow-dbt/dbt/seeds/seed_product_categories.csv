@@ -1,0 +1,41 @@
+category,sub_category,display_name
+Electronics,Smartphones,Mobile Phones
+Electronics,Laptops,Laptop Computers
+Electronics,Tablets,Tablet Computers
+Electronics,Headphones,Audio Devices
+Electronics,Cameras,Digital Cameras
+Clothing,Men's Wear,Men's Fashion
+Clothing,Women's Wear,Women's Fashion
+Clothing,Kids Wear,Children's Clothing
+Clothing,Sportswear,Athletic Wear
+Clothing,Accessories,Fashion Accessories
+Home & Kitchen,Cookware,Kitchen Cookware
+Home & Kitchen,Furniture,Home Furniture
+Home & Kitchen,Bedding,Bed & Bath
+Home & Kitchen,Appliances,Home Appliances
+Home & Kitchen,Decor,Home Decoration
+Books,Fiction,Fiction Books
+Books,Non-Fiction,Non-Fiction Books
+Books,Academic,Academic & Education
+Books,Children's,Children's Books
+Books,Comics,Comics & Graphic Novels
+Sports,Cricket,Cricket Equipment
+Sports,Football,Football Equipment
+Sports,Fitness,Fitness & Gym
+Sports,Outdoor,Outdoor & Adventure
+Sports,Swimming,Swimming & Water Sports
+Beauty,Skincare,Skin Care Products
+Beauty,Haircare,Hair Care Products
+Beauty,Makeup,Cosmetics & Makeup
+Beauty,Fragrances,Perfumes & Fragrances
+Beauty,Personal Care,Personal Care
+Grocery,Staples,Grocery Staples
+Grocery,Snacks,Snacks & Munchies
+Grocery,Beverages,Drinks & Beverages
+Grocery,Dairy,Dairy Products
+Grocery,Organic,Organic & Natural
+Toys,Action Figures,Action Figures & Collectibles
+Toys,Board Games,Board & Card Games
+Toys,Educational,Educational Toys
+Toys,Outdoor Toys,Outdoor Play
+Toys,Dolls,Dolls & Playsets

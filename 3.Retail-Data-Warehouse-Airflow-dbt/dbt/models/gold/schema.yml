@@ -1,0 +1,69 @@
+version: 2
+
+models:
+  - name: dim_date
+    description: "Calendar date dimension spanning 2020–2026 with year, quarter, month, week, day attributes."
+    columns:
+      - name: date_key
+        description: "YYYYMMDD integer surrogate key"
+        tests: [not_null, unique]
+      - name: full_date
+        tests: [not_null, unique]
+      - name: is_weekend
+        tests: [not_null]
+
+  - name: dim_customer
+    description: >
+      SCD Type 2 customer dimension. Each row represents one version of a customer record.
+      is_current=true marks the active record.
+    columns:
+      - name: customer_sk
+        description: "Surrogate key (hash of customer_id + version)"
+        tests: [not_null, unique]
+      - name: customer_nk
+        description: "Natural key — original customer_id from source"
+        tests: [not_null]
+      - name: is_current
+        tests: [not_null]
+      - name: valid_from
+        tests: [not_null]
+      - name: customer_segment
+        tests:
+          - accepted_values:
+              values: ['Premium', 'Regular', 'Budget', 'VIP']
+              config:
+                where: "is_current = true"
+
+  - name: dim_product
+    description: "Product dimension — excludes zero-price products."
+    columns:
+      - name: product_sk
+        description: "Surrogate key"
+        tests: [not_null, unique]
+      - name: product_nk
+        description: "Natural key — original product_id"
+        tests: [not_null, unique]
+      - name: unit_price
+        tests: [not_null]
+
+  - name: fact_orders
+    description: "Order fact table — one row per order, incremental load, excludes future-dated orders."
+    columns:
+      - name: order_id
+        tests: [not_null, unique]
+      - name: customer_key
+        tests: [not_null]
+      - name: order_date_key
+        tests: [not_null]
+      - name: total_amount
+        tests: [not_null]
+
+  - name: fact_payments
+    description: "Payment fact table — one row per payment, incremental load."
+    columns:
+      - name: payment_id
+        tests: [not_null, unique]
+      - name: order_id
+        tests: [not_null]
+      - name: amount
+        tests: [not_null]
